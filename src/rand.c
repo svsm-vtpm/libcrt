@@ -9,9 +9,21 @@ void srand(unsigned s)
 	seed = s-1;
 }
 
+/* return 0 on success */
+static inline int IntelRDrand64(uint64_t *rnd)
+{
+    unsigned char ok;
+
+    __asm__ volatile("rdrand %0; setc %1":"=r"(*rnd), "=qm"(ok));
+
+    return (ok) ? 0 : -1;
+}
+
 int rand(void)
 {
-	printf("%s called\n", __func__);
-	seed = 6364136223846793005ULL*seed + 1;
-	return seed>>33;
+  uint64_t r;
+  if (IntelRDrand64(&r)) {
+    printf("%s, RDRAND failed\n", __func__);
+  }
+  return r;
 }
