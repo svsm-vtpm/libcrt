@@ -742,6 +742,8 @@ int fcntl(int fd, int cmd, ...);
 
 time_t mktime(struct tm *tm);
 
+char *ctime(const time_t *t);
+
 int isascii(int c);
 
 #define OFFSET_OF(TYPE, Field)  ((UINTN) __builtin_offsetof(TYPE, Field))
