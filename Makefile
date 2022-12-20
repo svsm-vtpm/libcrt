@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 
 CFLAGS = -I./include -O3 -nostdinc -nostdlib
-CFLAGS		+= -m64 -march=x86-64 -mno-sse2
+CFLAGS		+= -m64 -march=x86-64 -mno-sse2 -fPIE
 CFLAGS		+= -fno-stack-protector
 CFLAGS		+= -ffreestanding
 CC := gcc
