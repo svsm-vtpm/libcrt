@@ -15,34 +15,30 @@ FILE  *stderr = NULL;
 FILE  *stdin  = NULL;
 FILE  *stdout = NULL;
 
-#if 0
 typedef
 int
 (*SORT_COMPARE)(
-  IN  VOID  *Buffer1,
-  IN  VOID  *Buffer2
+  void  *Buffer1,
+  void  *Buffer2
   );
 
 //
 // Duplicated from EDKII BaseSortLib for qsort() wrapper
 //
-STATIC
-VOID
-QuickSortWorker (
-  IN OUT    VOID          *BufferToSort,
-  IN CONST  UINTN         Count,
-  IN CONST  UINTN         ElementSize,
-  IN        SORT_COMPARE  CompareFunction,
-  IN        VOID          *Buffer
-  )
+static void QuickSortWorker(
+        void *BufferToSort,
+        const size_t Count,
+        const size_t ElementSize,
+        SORT_COMPARE  CompareFunction,
+        void *Buffer)
 {
-  VOID   *Pivot;
-  UINTN  LoopCount;
-  UINTN  NextSwapLocation;
+  void *Pivot;
+  size_t LoopCount;
+  size_t NextSwapLocation;
 
-  ASSERT (BufferToSort    != NULL);
-  ASSERT (CompareFunction != NULL);
-  ASSERT (Buffer          != NULL);
+  assert(BufferToSort    != NULL);
+  assert(CompareFunction != NULL);
+  assert(Buffer          != NULL);
 
   if ((Count < 2) || (ElementSize  < 1)) {
     return;
@@ -63,13 +59,13 @@ QuickSortWorker (
     //
     // If the element is less than the pivot
     //
-    if (CompareFunction ((VOID *)((UINT8 *)BufferToSort + ((LoopCount) * ElementSize)), Pivot) <= 0) {
+    if (CompareFunction((void *)((uint8_t *)BufferToSort + ((LoopCount) * ElementSize)), Pivot) <= 0) {
       //
       // Swap
       //
-      CopyMem (Buffer, (UINT8 *)BufferToSort + (NextSwapLocation * ElementSize), ElementSize);
-      CopyMem ((UINT8 *)BufferToSort + (NextSwapLocation * ElementSize), (UINT8 *)BufferToSort + ((LoopCount) * ElementSize), ElementSize);
-      CopyMem ((UINT8 *)BufferToSort + ((LoopCount) * ElementSize), Buffer, ElementSize);
+      memcpy(Buffer, (uint8_t *)BufferToSort + (NextSwapLocation * ElementSize), ElementSize);
+      memcpy((uint8_t *)BufferToSort + (NextSwapLocation * ElementSize), (uint8_t *)BufferToSort + ((LoopCount) * ElementSize), ElementSize);
+      memcpy((uint8_t *)BufferToSort + ((LoopCount) * ElementSize), Buffer, ElementSize);
 
       //
       // Increment NextSwapLocation
@@ -81,9 +77,9 @@ QuickSortWorker (
   //
   // Swap pivot to its final position (NextSwapLocation)
   //
-  CopyMem (Buffer, Pivot, ElementSize);
-  CopyMem (Pivot, (UINT8 *)BufferToSort + (NextSwapLocation * ElementSize), ElementSize);
-  CopyMem ((UINT8 *)BufferToSort + (NextSwapLocation * ElementSize), Buffer, ElementSize);
+  memcpy(Buffer, Pivot, ElementSize);
+  memcpy(Pivot, (uint8_t *)BufferToSort + (NextSwapLocation * ElementSize), ElementSize);
+  memcpy((uint8_t *)BufferToSort + (NextSwapLocation * ElementSize), Buffer, ElementSize);
 
   //
   // Now recurse on 2 partial lists.  Neither of these will have the 'pivot' element.
@@ -98,7 +94,7 @@ QuickSortWorker (
     );
 
   QuickSortWorker (
-    (UINT8 *)BufferToSort + (NextSwapLocation + 1) * ElementSize,
+    (uint8_t *)BufferToSort + (NextSwapLocation + 1) * ElementSize,
     Count - NextSwapLocation - 1,
     ElementSize,
     CompareFunction,
@@ -107,7 +103,6 @@ QuickSortWorker (
 
   return;
 }
-#endif
 
 // ---------------------------------------------------------
 // Standard C Run-time Library Interface Wrapper
@@ -402,7 +397,6 @@ tolower (
 // -- Searching and Sorting Routines --
 //
 
-#if 0
 /* Performs a quick sort */
 void
 qsort (
@@ -412,26 +406,25 @@ qsort (
   int ( *compare )(const void *, const void *)
   )
 {
-  VOID  *Buffer;
+  void *Buffer;
 
-  ASSERT (base    != NULL);
-  ASSERT (compare != NULL);
+  assert(base    != NULL);
+  assert(compare != NULL);
 
   //
   // Use CRT-style malloc to cover BS and RT memory allocation.
   //
   Buffer = malloc (width);
-  ASSERT (Buffer != NULL);
+  assert(Buffer != NULL);
 
   //
   // Re-use PerformQuickSort() function Implementation in EDKII BaseSortLib.
   //
-  QuickSortWorker (base, (UINTN)num, (UINTN)width, (SORT_COMPARE)compare, Buffer);
+  QuickSortWorker (base, (size_t)num, (size_t)width, (SORT_COMPARE)compare, Buffer);
 
-  free (Buffer);
+  free(Buffer);
   return;
 }
-#endif
 
 //
 // -- Process and Environment Control Routines --
