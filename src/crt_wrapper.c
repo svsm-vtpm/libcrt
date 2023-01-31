@@ -8,6 +8,7 @@ SPDX-License-Identifier: BSD-2-Clause-Patent
 **/
 
 #include <CrtLibSupport.h>
+#include <sys/stat.h>
 
 int  errno = 0;
 
@@ -624,4 +625,8 @@ FILE *f)
 
 int remove(const char *path) {
   return 0;
+}
+int stat(const char *__restrict path, struct stat *restrict buf)
+{
+    return 1;
 }

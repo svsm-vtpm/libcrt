@@ -157,7 +157,6 @@ typedef __builtin_va_list VA_LIST;
 // Basic types mapping
 //
 typedef UINTN   size_t;
-typedef UINTN   off_t;
 typedef UINTN   u_int;
 typedef INTN    ptrdiff_t;
 typedef INTN    ssize_t;
@@ -229,93 +228,17 @@ struct sockaddr {
 
 #define __NEED_pid_t
 
-#define _Addr long
-#define _Int64 long
+#define __NEED_dev_t
+#define __NEED_ino_t
+#define __NEED_mode_t
+#define __NEED_nlink_t
+#define __NEED_uid_t
+#define __NEED_gid_t
+#define __NEED_off_t
+#define __NEED_blksize_t
+#define __NEED_blkcnt_t
 
-#if defined(__NEED_int8_t) && !defined(__DEFINED_int8_t)
-typedef signed char     int8_t;
-#define __DEFINED_int8_t
-#endif
-
-#if defined(__NEED_int16_t) && !defined(__DEFINED_int16_t)
-typedef signed short    int16_t;
-#define __DEFINED_int16_t
-#endif
-
-#if defined(__NEED_int32_t) && !defined(__DEFINED_int32_t)
-typedef signed int      int32_t;
-#define __DEFINED_int32_t
-#endif
-
-#if defined(__NEED_int64_t) && !defined(__DEFINED_int64_t)
-typedef signed _Int64   int64_t;
-#define __DEFINED_int64_t
-#endif
-
-#if defined(__NEED_intmax_t) && !defined(__DEFINED_intmax_t)
-typedef signed _Int64   intmax_t;
-#define __DEFINED_intmax_t
-#endif
-
-#if defined(__NEED_uint8_t) && !defined(__DEFINED_uint8_t)
-typedef unsigned char   uint8_t;
-#define __DEFINED_uint8_t
-#endif
-
-#if defined(__NEED_uint16_t) && !defined(__DEFINED_uint16_t)
-typedef unsigned short  uint16_t;
-#define __DEFINED_uint16_t
-#endif
-
-#if defined(__NEED_uint32_t) && !defined(__DEFINED_uint32_t)
-typedef unsigned int    uint32_t;
-#define __DEFINED_uint32_t
-#endif
-
-#if defined(__NEED_uint64_t) && !defined(__DEFINED_uint64_t)
-typedef unsigned _Int64 uint64_t;
-#define __DEFINED_uint64_t
-#endif
-
-#if defined(__NEED_u_int64_t) && !defined(__DEFINED_u_int64_t)
-typedef unsigned _Int64 u_int64_t;
-#define __DEFINED_u_int64_t
-#endif
-
-#if defined(__NEED_uintmax_t) && !defined(__DEFINED_uintmax_t)
-typedef unsigned _Int64 uintmax_t;
-#define __DEFINED_uintmax_t
-#endif
-
-#if defined(__NEED_uintptr_t) && !defined(__DEFINED_uintptr_t)
-typedef unsigned _Addr uintptr_t;
-#define __DEFINED_uintptr_t
-#endif
-
-#if defined(__NEED_time_t) && !defined(__DEFINED_time_t)
-typedef _Int64 time_t;
-#define __DEFINED_time_t
-#endif
-
-#if defined(__NEED_clock_t) && !defined(__DEFINED_clock_t)
-typedef long clock_t;
-#define __DEFINED_clock_t
-#endif
-
-#if defined(__NEED_clockid_t) && !defined(__DEFINED_clockid_t)
-typedef int clockid_t;
-#define __DEFINED_clockid_t
-#endif
-
-#if defined(__NEED_pid_t) && !defined(__DEFINED_pid_t)
-typedef int pid_t;
-#define __DEFINED_pid_t
-#endif
-
-#if defined(__NEED_struct_timespec) && !defined(__DEFINED_struct_timespec)
-struct timespec { time_t tv_sec; int :8*(sizeof(time_t)-sizeof(long))*(__BYTE_ORDER==4321); long tv_nsec; int :8*(sizeof(time_t)-sizeof(long))*(__BYTE_ORDER!=4321); };
-#define __DEFINED_struct_timespec
-#endif
+#include <bits/alltypes.h>
 
 #define STDERR_FILENO 2
 
