@@ -59,6 +59,8 @@ OBJS := $(addprefix src/, \
 				mktime.o \
 				__errno_location.o \
 				ctime.o \
+				ossl_store.o \
+				rand_pool.o \
 				)
 
 all: libcrt.a
