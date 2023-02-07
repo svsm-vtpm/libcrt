@@ -626,7 +626,28 @@ FILE *f)
 int remove(const char *path) {
   return 0;
 }
+
+// sys/stat.h
+
 int stat(const char *__restrict path, struct stat *restrict buf)
 {
     return 1;
+}
+
+// dirent.h
+
+/* Returns NULL on error */
+DIR *opendir(const char *name)
+{
+    return 0;
+}
+/* Returns -1 on error */
+int closedir(DIR *name)
+{
+    return -1;
+}
+/* Returns NULL on error */
+struct dirent *readdir(DIR *name)
+{
+    return 0;
 }

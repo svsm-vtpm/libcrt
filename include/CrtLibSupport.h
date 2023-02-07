@@ -127,6 +127,7 @@ typedef __builtin_va_list VA_LIST;
 // Definitions for global constants used by CRT library routines
 //
 #define ENOENT           2
+#define ENOMEM          12
 #define EINVAL        22              /* Invalid argument */
 #define EAFNOSUPPORT  47              /* Address family not supported by protocol family */
 #define EOVERFLOW       75
@@ -305,6 +306,21 @@ static inline unsigned long long rdtsc(void)
 #define PRIu32 "u"
 #define PRIu64 __PRI64 "u"
 
+// dirent.h
+
+typedef struct __dirstream DIR;
+
+struct dirent {
+    ino_t d_ino;
+    off_t d_off;
+    unsigned short d_reclen;
+    unsigned char d_type;
+    char d_name[256];
+};
+
+DIR *opendir(const char *name);
+int closedir(DIR *name);
+struct dirent *readdir(DIR *name);
 
 typedef unsigned long __jmp_buf[8];
 
