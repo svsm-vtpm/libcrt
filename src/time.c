@@ -5,7 +5,7 @@
 
 clock_t clock(void) {
 	//printf("%s, reached dummy stub\n", __func__);
-	return __rdtsc();
+	return rdtsc();
 }
 
 uint64_t secs;
@@ -15,7 +15,7 @@ int clock_gettime(clockid_t clk_id, struct timespec *tp) {
 	(void) clk_id;
 	//(void) tp;
 	if (tp) {
-		tp->tv_nsec = __rdtsc();
+		tp->tv_nsec = rdtsc();
 		tp->tv_sec = secs++;
 	}
 
@@ -26,7 +26,7 @@ int clock_gettime(clockid_t clk_id, struct timespec *tp) {
 //  time() returns the time as the number of seconds since the Epoch
 time_t time(time_t *tloc) {
 	(void)tloc;
-	time_t t = __rdtsc();
+	time_t t = rdtsc();
 	//printf("%s, %lu \n", __func__, t);
 	return t;
 }
